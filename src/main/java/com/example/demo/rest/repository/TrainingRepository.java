@@ -1,40 +1,69 @@
 package com.example.demo.rest.repository;
 
-import com.example.demo.model.entity.Trainee;
+import com.example.demo.constants.CSVReaderWriter;
+import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.model.entity.Training;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
+
+import static com.example.demo.constants.CSVReaderWriter.saveToCSV;
 
 @Component
-public class TraineeRepository {
-    private Map<Long, Trainee> traineeMap = new ConcurrentHashMap<>();
-    private Long idCounter = 1L;
+public class TrainingRepository {
+    private final Map<Long, Training> trainingMap = new ConcurrentHashMap<>();
 
-    public Trainee save(Trainee trainee) {
-        trainee.setId(idCounter++);
-        traineeMap.put(trainee.getId(), trainee);
-        return trainee;
+    public static Long idCounter = 1L;
+
+    private static final Logger logger = Logger.getLogger(TrainingRepository.class.getName());
+
+    private final String csvFilePath = "training_data.csv";
+
+    public TrainingRepository() {
+        CSVReaderWriter.loadFromCSVTraining(csvFilePath,trainingMap);
     }
 
-    public Trainee findById(Long id) {
-        return traineeMap.get(id);
+    public Training save(Training training) {
+        training.setId(idCounter++);
+        trainingMap.put(training.getId(), training);
+        saveToCSV(trainingMap,csvFilePath);
+
+        logger.info("Added Training : " + training.getName());
+        return training;
     }
 
-    public List<Trainee> findAll() {
-        return new ArrayList<>(traineeMap.values());
+    public Training findById(Long id) {
+        logger.info("found Training with ID: " + id);
+        return trainingMap.get(id);
     }
 
-    public Trainee update(Trainee trainee) {
-        if (traineeMap.containsKey(trainee.getId())) {
-            traineeMap.put(trainee.getId(), trainee);
-            return trainee;
+    public List<Training> findAll() {
+        logger.info("found all Training");
+        return new ArrayList<>(trainingMap.values());
+    }
+
+    public Training update(Training training) {
+        if (trainingMap.containsKey(training.getId())) {
+            trainingMap.put(training.getId(), training);
+            saveToCSV(trainingMap,csvFilePath);
+
+            logger.info("Updated Training : " + training.getName());
+            return training;
         }
-        return null;
+
+        logger.info("Training is not found " + training.getId());
+        throw new UserNotFoundException("Training is not found");
     }
 
     public void delete(Long id) {
-        traineeMap.remove(id);
+        trainingMap.remove(id);
+        saveToCSV(trainingMap,csvFilePath);
+        logger.info("Deleted Training with ID: " + id);
     }
-    }
+}
 

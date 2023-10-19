@@ -1,21 +1,32 @@
-package com.example.demo.entity;
+package com.example.demo.model.entity;
 
+import com.example.demo.constants.Specialization;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "trainer")
 public class Trainer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Long spetializationId;
+    @Enumerated(EnumType.STRING)
+    private Specialization specialization;
 
-    @Column
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Trainer(Long id, Specialization specialization, User user) {
+        this.id = id;
+        this.specialization = specialization;
+        this.user = user;
+    }
+
+    public Trainer() {
+    }
 
     public Long getId() {
         return id;
@@ -25,20 +36,20 @@ public class Trainer {
         this.id = id;
     }
 
-    public Long getSpetializationId() {
-        return spetializationId;
+    public Specialization getSpecialization() {
+        return specialization;
     }
 
-    public void setSpetializationId(Long spetializationId) {
-        this.spetializationId = spetializationId;
+    public void setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -46,11 +57,11 @@ public class Trainer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Trainer trainer = (Trainer) o;
-        return Objects.equals(id, trainer.id) && Objects.equals(spetializationId, trainer.spetializationId) && Objects.equals(userId, trainer.userId);
+        return Objects.equals(id, trainer.id) && specialization == trainer.specialization && Objects.equals(user, trainer.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, spetializationId, userId);
+        return Objects.hash(id, specialization, user);
     }
 }

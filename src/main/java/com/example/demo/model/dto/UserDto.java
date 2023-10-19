@@ -1,15 +1,16 @@
-package com.example.demo.model.entity;
+package com.example.demo.model.dto;
 
-import jakarta.persistence.*;
+import com.example.demo.model.entity.Trainee;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
 
+import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "user")
-public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDto {
+
+
     private Long id;
 
     private String name;
@@ -21,6 +22,8 @@ public class User {
     private String password;
 
     private Boolean isActive;
+    @OneToOne(fetch = FetchType.LAZY)
+    private List<Trainee> trainees;
 
     public Long getId() {
         return id;
@@ -70,16 +73,24 @@ public class User {
         isActive = active;
     }
 
+    public List<Trainee> getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(List<Trainee> trainees) {
+        this.trainees = trainees;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(isActive, user.isActive);
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(id, userDto.id) && Objects.equals(name, userDto.name) && Objects.equals(lastName, userDto.lastName) && Objects.equals(username, userDto.username) && Objects.equals(password, userDto.password) && Objects.equals(isActive, userDto.isActive) && Objects.equals(trainees, userDto.trainees);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, username, password, isActive);
+        return Objects.hash(id, name, lastName, username, password, isActive, trainees);
     }
 }

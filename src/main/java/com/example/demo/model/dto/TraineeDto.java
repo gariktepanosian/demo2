@@ -1,20 +1,21 @@
-package com.example.demo.model.entity;
+package com.example.demo.model.dto;
 
-import jakarta.persistence.*;
+import com.example.demo.model.entity.User;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
-@Table(name = "trainee")
-public class Trainee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class TraineeDto {
+
     private Long id;
 
     private LocalDate dateOfBirth;
 
-    private Long userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Long getId() {
         return id;
@@ -32,25 +33,25 @@ public class Trainee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Trainee trainee = (Trainee) o;
-        return Objects.equals(id, trainee.id) && Objects.equals(dateOfBirth, trainee.dateOfBirth) && Objects.equals(userId, trainee.userId);
+        TraineeDto that = (TraineeDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateOfBirth, userId);
+        return Objects.hash(id, dateOfBirth, user);
     }
 }
 

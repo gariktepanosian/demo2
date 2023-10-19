@@ -1,15 +1,15 @@
 package com.example.demo.constants;
 
-public enum Spetialization {
+public enum Specialization {
 
     TRAINER("Trainer");
-    private final String spetialization;
+    private final String specialization;
 
-    Spetialization(String spetialization) {
-        this.spetialization = spetialization;
+    Specialization(String specialization) {
+        this.specialization = specialization;
     }
 
-    public String getSpetialization() {
-        return spetialization;
+    public String getSpecialization() {
+        return specialization;
     }
 }

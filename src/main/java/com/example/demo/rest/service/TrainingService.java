@@ -1,20 +1,19 @@
 package com.example.demo.rest.service;
 
-import com.example.demo.model.dto.TraineeDto;
-import com.example.demo.model.entity.Trainee;
+import com.example.demo.model.dto.TrainingDto;
 
 import java.util.List;
 
-public interface TraineeService {
+public interface TrainingService {
 
-    List<Trainee> findAll();
+    List<TrainingDto> findAll();
 
-    TraineeDto create(TraineeDto trainee);
+    TrainingDto create(TrainingDto training);
 
-    TraineeDto update(TraineeDto trainee);
+    TrainingDto update(TrainingDto training);
 
-    String delete(Long traineeId);
+    String delete(Long trainingId);
 
-    TraineeDto findById(Long traineeId);
+    TrainingDto findById(Long trainingId);
 }
 

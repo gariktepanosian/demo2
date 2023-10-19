@@ -1,4 +1,4 @@
-package com.example.demo.rest.memory;
+package com.example.demo.rest.repository;
 
 import com.example.demo.model.entity.Trainee;
 import com.example.demo.model.entity.Trainer;

@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model.entity;
 
 import jakarta.persistence.*;
 
@@ -6,27 +6,28 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "training")
 public class Training {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private Long traineeId;
 
-    @Column
-    private Long trainerId;
+    @ManyToOne
+    @JoinColumn(name = "trainee_id")
+    private Trainee trainee;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
+
     private String name;
 
-    @Column
-    private Long typeId;
+    @ManyToOne
+    @JoinColumn(name = "training_type_id")
+    private TrainingType trainingType;
 
-    @Column
-   private LocalDate date;
+    private LocalDate date;
 
-    @Column
     private Long duration;
 
     public Long getId() {
@@ -37,20 +38,20 @@ public class Training {
         this.id = id;
     }
 
-    public Long getTraineeId() {
-        return traineeId;
+    public Trainee getTrainee() {
+        return trainee;
     }
 
-    public void setTraineeId(Long traineeId) {
-        this.traineeId = traineeId;
+    public void setTrainee(Trainee trainee) {
+        this.trainee = trainee;
     }
 
-    public Long getTrainerId() {
-        return trainerId;
+    public Trainer getTrainer() {
+        return trainer;
     }
 
-    public void setTrainerId(Long trainerId) {
-        this.trainerId = trainerId;
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 
     public String getName() {
@@ -61,12 +62,12 @@ public class Training {
         this.name = name;
     }
 
-    public Long getTypeId() {
-        return typeId;
+    public TrainingType getTrainingType() {
+        return trainingType;
     }
 
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
+    public void setTrainingType(TrainingType trainingType) {
+        this.trainingType = trainingType;
     }
 
     public LocalDate getDate() {
@@ -85,16 +86,29 @@ public class Training {
         this.duration = duration;
     }
 
+    public Training(Long id, Trainee trainee, Trainer trainer, String name, TrainingType trainingType, LocalDate date, Long duration) {
+        this.id = id;
+        this.trainee = trainee;
+        this.trainer = trainer;
+        this.name = name;
+        this.trainingType = trainingType;
+        this.date = date;
+        this.duration = duration;
+    }
+
+    public Training() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Training training = (Training) o;
-        return Objects.equals(id, training.id) && Objects.equals(traineeId, training.traineeId) && Objects.equals(trainerId, training.trainerId) && Objects.equals(name, training.name) && Objects.equals(typeId, training.typeId) && Objects.equals(date, training.date) && Objects.equals(duration, training.duration);
+        return Objects.equals(id, training.id) && Objects.equals(trainee, training.trainee) && Objects.equals(trainer, training.trainer) && Objects.equals(name, training.name) && Objects.equals(trainingType, training.trainingType) && Objects.equals(date, training.date) && Objects.equals(duration, training.duration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, traineeId, trainerId, name, typeId, date, duration);
+        return Objects.hash(id, trainee, trainer, name, trainingType, date, duration);
     }
 }

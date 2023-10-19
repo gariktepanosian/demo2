@@ -1,43 +1,42 @@
 package com.example.demo.model.mapper;
 
-import com.example.demo.model.dto.TraineeDto;
-import com.example.demo.model.entity.Trainee;
+import com.example.demo.model.dto.TrainingDto;
+import com.example.demo.model.entity.Training;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TraineeMapper {
+public class TrainingMapper {
 
-    public static Trainee toTrainee(TraineeDto traineeDto) {
-        Trainee trainee = new Trainee();
-        trainee.setId(traineeDto.getId());
-        trainee.setDateOfBirth(traineeDto.getDateOfBirth());
-        trainee.setUser(traineeDto.getUser());
-        return trainee;
+    public static Training toTraining(TrainingDto trainingDto) {
+        Training training = new Training();
+        training.setId(trainingDto.getId());
+        training.setTrainee(trainingDto.getTrainee());
+        training.setTrainer(trainingDto.getTrainer());
+        training.setTrainingType(trainingDto.getTrainingType());
+        training.setDate(trainingDto.getDate());
+        training.setName(trainingDto.getName());
+        training.setDuration(trainingDto.getDuration());
+        return training;
     }
 
-    public static TraineeDto toTraineeDto(Trainee trainee) {
-        TraineeDto traineeDto = new TraineeDto();
-        traineeDto.setId(trainee.getId());
-        traineeDto.setDateOfBirth(trainee.getDateOfBirth());
-        traineeDto.setUser(trainee.getUser());
-        return traineeDto;
+    public static TrainingDto toTrainingDto(Training training) {
+        TrainingDto trainingDto = new TrainingDto();
+        trainingDto.setId(training.getId());
+        trainingDto.setTrainee(training.getTrainee());
+        trainingDto.setTrainer(training.getTrainer());
+        trainingDto.setTrainingType(training.getTrainingType());
+        trainingDto.setDuration(training.getDuration());
+        trainingDto.setDate(training.getDate());
+        trainingDto.setName(training.getName());
+        return trainingDto;
     }
 
-    public static List<TraineeDto> toSTraineeDtoList(List<Trainee> traineeListEntities) {
-        return traineeListEntities
+    public static List<TrainingDto> toTrainingDtoList(List<Training> trainingListEntities) {
+        return trainingListEntities
                 .stream()
-                .map(TraineeMapper::toTraineeDto)
+                .map(TrainingMapper::toTrainingDto)
                 .collect(Collectors
                         .toList());
     }
-
-    public static List<Trainee> toSTraineeList(List<TraineeDto> traineeDtoListEntities) {
-        return traineeDtoListEntities
-                .stream()
-                .map(TraineeMapper::toTrainee)
-                .collect(Collectors
-                        .toList());
-    }
-
 }

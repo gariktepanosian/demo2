@@ -1,14 +1,10 @@
-package com.example.demo.model.entity;
-
-import jakarta.persistence.*;
+package com.example.demo.model.dto;
 
 import java.util.Objects;
 
-@Entity
-@Table(name = "training_type")
-public class TrainingType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class TrainingTypeDto {
+
     private Long id;
 
     private String typeName;
@@ -33,7 +29,7 @@ public class TrainingType {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TrainingType that = (TrainingType) o;
+        TrainingTypeDto that = (TrainingTypeDto) o;
         return Objects.equals(id, that.id) && Objects.equals(typeName, that.typeName);
     }
 

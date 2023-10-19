@@ -1,46 +1,45 @@
 package com.example.demo.rest.service.serviceImpl;
 
-import com.example.demo.model.dto.TrainerDto;
-import com.example.demo.model.entity.Trainer;
-import com.example.demo.model.mapper.TrainerMapper;
-import com.example.demo.rest.repository.TrainerRepository;
-import com.example.demo.rest.service.TrainerService;
+import com.example.demo.model.dto.TrainingTypeDto;
+import com.example.demo.model.mapper.TrainingTypeMapper;
+import com.example.demo.rest.repository.TrainingTypeRepository;
+import com.example.demo.rest.service.TrainingTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class TrainerServiceImpl implements TrainerService {
+public class TrainingTypeServiceImpl implements TrainingTypeService {
 
-    public final TrainerRepository trainerRepository;
+    public final TrainingTypeRepository trainingTypeRepository;
 
     @Autowired
-    public TrainerServiceImpl(TrainerRepository trainerRepository) {
-        this.trainerRepository = trainerRepository;
+    public TrainingTypeServiceImpl(TrainingTypeRepository trainingTypeRepository) {
+        this.trainingTypeRepository = trainingTypeRepository;
     }
 
     @Override
-    public List<Trainer> findAll() {
-        return trainerRepository.findAll();
+    public List<TrainingTypeDto> findAll() {
+        return TrainingTypeMapper.toTrainingTypeDtoList(trainingTypeRepository.findAll());
     }
 
     @Override
-    public TrainerDto create(TrainerDto trainer) {
-        return TrainerMapper.toTraineeDto(trainerRepository.save(TrainerMapper.toTrainer(trainer)));
+    public TrainingTypeDto create(TrainingTypeDto trainingType) {
+        return TrainingTypeMapper.toTrainingTypeDto(trainingTypeRepository.save(TrainingTypeMapper.toTrainingType(trainingType)));
     }
 
     @Override
-    public TrainerDto update(TrainerDto trainer) {
-        return TrainerMapper.toTraineeDto(trainerRepository.update(TrainerMapper.toTrainer(trainer)));
+    public TrainingTypeDto update(TrainingTypeDto trainingType) {
+        return TrainingTypeMapper.toTrainingTypeDto(trainingTypeRepository.update(TrainingTypeMapper.toTrainingType(trainingType)));
     }
 
     @Override
-    public String delete(Long trainerId) {
-        trainerRepository.delete(trainerId);
+    public String delete(Long trainingTypeId) {
+        trainingTypeRepository.delete(trainingTypeId);
         return "info was deleted";
     }
 
     @Override
-    public TrainerDto findById(Long trainerId) {
-        return TrainerMapper.toTraineeDto(trainerRepository.findById(trainerId));
+    public TrainingTypeDto findById(Long trainingTypeId) {
+        return TrainingTypeMapper.toTrainingTypeDto(trainingTypeRepository.findById(trainingTypeId));
     }
 }

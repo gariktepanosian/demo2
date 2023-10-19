@@ -1,25 +1,31 @@
-package com.example.demo.entity;
+package com.example.demo.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "trainee")
 public class Trainee {
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
     private LocalDate dateOfBirth;
 
-    @Column
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Trainee(Long id, LocalDate dateOfBirth, User user) {
+        this.id = id;
+        this.dateOfBirth = dateOfBirth;
+        this.user = user;
+    }
+
+    public Trainee() {
+    }
 
     public Long getId() {
         return id;
@@ -37,12 +43,12 @@ public class Trainee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -50,12 +56,12 @@ public class Trainee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Trainee trainee = (Trainee) o;
-        return Objects.equals(id, trainee.id) && Objects.equals(dateOfBirth, trainee.dateOfBirth) && Objects.equals(userId, trainee.userId);
+        return Objects.equals(id, trainee.id) && Objects.equals(dateOfBirth, trainee.dateOfBirth) && Objects.equals(user, trainee.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateOfBirth, userId);
+        return Objects.hash(id, dateOfBirth, user);
     }
 }
 
