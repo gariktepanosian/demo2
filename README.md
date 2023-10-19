@@ -42,7 +42,7 @@ This Spring application demonstrates the implementation of Trainee and Trainer e
 - Usernames for Trainee and Trainer entities are calculated based on first name and last name, with a serial number added if necessary.
 - Passwords are generated as random 10-character strings.
 
-- ## Unit Tests for Trainee and Related Services
+## Unit Tests for Trainee and Related Services
 
 - This section outlines the unit tests specifically designed for the Trainee domain model and its associated classes.
 
